@@ -134,12 +134,15 @@ async function ensureEmbeddedPostgresConnection(
     };
   }
 
-  const instance = new EmbeddedPostgres({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const EmbeddedPostgresAny = EmbeddedPostgres as any;
+  const instance = new EmbeddedPostgresAny({
     databaseDir: dataDir,
     user: "paperclip",
     password: "paperclip",
     port: selectedPort,
     persistent: true,
+    createPostgresUser: true,
     initdbFlags: ["--encoding=UTF8", "--locale=C", "--lc-messages=C"],
     onLog: logBuffer.append,
     onError: logBuffer.append,
